@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+	<Properties>
+		<Property name="LOG_PATTERN">
+			%date %level [%thread] %logger.%M : %line : %msg - %X{x-Request-ID}%n
+		</Property>
+		<Property name="APP_LOG_ROOT">logs</Property>
+	</Properties>
+
+	<Appenders>
+		<Console name="ConsoleAppender" target="SYSTEM_OUT" follow="true">
+			<PatternLayout pattern="${LOG_PATTERN}" />
+		</Console>
+
+
+		<RollingFile name="RollingFile" fileName="${APP_LOG_ROOT}/response-subsriber.log"
+			filePattern="logs/archived/response-subsriber-%d{yyyy-MM-dd}-%i.log"
+			ignoreExceptions="false">
+			<PatternLayout pattern="${LOG_PATTERN}" />
+			<TimeBasedTriggeringPolicy />
+		</RollingFile>
+	</Appenders>
+
+	<Loggers>
+		<Logger name="com.wiley.alm" level="${sys:app.root.log.level:-INFO}"
+			additivity="false">
+			<AppenderRef ref="ConsoleAppender" />
+			<AppenderRef ref="RollingFile" />
+		</Logger>
+
+		<Logger name="org.apache.kafka" level="${sys:app.root.log.level:-INFO}"
+			additivity="false">
+			<AppenderRef ref="ConsoleAppender" />
+			<AppenderRef ref="RollingFile" />
+		</Logger>
+		
+		<Logger name="org.springframework.cloud" level="${sys:app.root.log.level:-INFO}"
+			additivity="false">
+			<AppenderRef ref="ConsoleAppender" />
+			<AppenderRef ref="RollingFile" />
+		</Logger>
+		<Logger name="org.springframework.kafka" level="${sys:app.root.log.level:-INFO}"
+			additivity="false">
+			<AppenderRef ref="ConsoleAppender" />
+			<AppenderRef ref="RollingFile" />
+		</Logger>
+
+		<Root level="${sys:app.root.log.level:-INFO}">
+			<AppenderRef ref="ConsoleAppender" />
+			<AppenderRef ref="RollingFile" />
+		</Root>
+	</Loggers>
+</Configuration>

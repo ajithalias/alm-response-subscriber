@@ -28,8 +28,8 @@ public class SucessResponseConverter implements Converter {
 
 	private static final Logger LOGGER = LogManager.getLogger(SucessResponseConverter.class);
 
-	@Autowired
-	private MessageProducer messageProducer;
+	private final String RECORD_TYPE="INBOUND_RESPONSE";
+	
 
 	public List<TargetResponseEvent> makeDtoForEventSubscriber(SucessResponseRequest responseRequest) throws Exception {
 		LOGGER.info("started converting for the request " + responseRequest);
@@ -43,7 +43,8 @@ public class SucessResponseConverter implements Converter {
 			event.setStatus(result.getOperationResult());
 			event.setSource(header.getGeneratedBy());
 			event.setTimestamp(String.valueOf(header.getGenerationDate()));
-			event.setEntityId(result.getPrimaryObjectID());
+			event.setSourceReferenceId(result.getPrimaryObjectID());
+			event.setRecordType(RECORD_TYPE);
 			targetResponseEvent.add(event);
 		}
 

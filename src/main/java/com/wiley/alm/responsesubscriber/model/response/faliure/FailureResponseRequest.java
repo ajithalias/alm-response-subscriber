@@ -1,4 +1,4 @@
-package com.wiley.alm.responsesubscriber.model;
+package com.wiley.alm.responsesubscriber.model.response.faliure;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.*;
@@ -7,12 +7,12 @@ import javax.xml.bind.annotation.XmlType;
 
 @XmlRootElement(name = "Fulfillment")
 @XmlType(propOrder = { "header", "body" })
-public class SucessResponseRequest {
+public class FailureResponseRequest {
 
 	private HeaderTM header;
-	private BodyTM body;
+	private BodyTMF body;
 
-	@XmlElement(name = "Header")
+	@XmlElement(name = "Header", required = true)
 	public HeaderTM getHeader() {
 		return header;
 	}
@@ -21,12 +21,12 @@ public class SucessResponseRequest {
 		this.header = header;
 	}
 
-	@XmlElement(name = "Body")
-	public BodyTM getBody() {
+	@XmlElement(name = "Body", required = true)
+	public BodyTMF getBody() {
 		return body;
 	}
 
-	public void setBody(BodyTM body) {
+	public void setBody(BodyTMF body) {
 		this.body = body;
 	}
 
