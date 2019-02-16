@@ -1,6 +1,8 @@
 
 package com.wiley.alm.responsesubscriber.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.MessageHeaders;
@@ -16,7 +18,7 @@ public class MessageProducer {
 	@Autowired
 	private Processor processor;
 
-	public void sendMessage(TargetResponseEvent targetResponseEvent) {
+	public void sendMessage(List<TargetResponseEvent> targetResponseEvent) {
 		MessageChannel messageChannel = processor.outbound();
 		messageChannel.send(MessageBuilder.withPayload(targetResponseEvent)
 				.setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_JSON)

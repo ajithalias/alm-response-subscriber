@@ -3,9 +3,11 @@ package com.wiley.alm.responsesubscriber.model;
 import java.util.Date;
 
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
+
 
 @XmlType(propOrder = { "generatedBy", "generationDate" })
 public class HeaderTM {

@@ -1,12 +1,15 @@
 package com.wiley.alm.responsesubscriber.model;
 
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 
 public class BodyTM {
 
-	@JacksonXmlElementWrapper(useWrapping = false)
+
 	private Result[] results;
 
+	@XmlElementWrapper(name="Results")
+	@XmlElement(name="Result")
 	public Result[] getResults() {
 		return results;
 	}
@@ -14,5 +17,10 @@ public class BodyTM {
 	public void setResults(Result[] results) {
 		this.results = results;
 	}
+	
+	
+	
+
+	
 	
 }
