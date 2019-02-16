@@ -1,14 +1,14 @@
-/*
- * &copy; John Wiley &amp; Sons, Inc
- */
+
 package com.wiley.alm.responsesubscriber.converters;
 
-/**
- * Description
- *
- * @author amit26si00, created 31-Jan-2019
- */
-public interface Converter<S, T> {
+import java.util.List;
 
-	public T convert(S responseEvent) throws Exception;
+import javax.jms.Message;
+
+import com.wiley.alm.responsesubscriber.model.TargetResponseEvent;
+
+
+public interface Converter {
+
+	public List<TargetResponseEvent> convert(Message responseEvent) throws Exception;
 }

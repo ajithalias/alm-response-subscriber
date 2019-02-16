@@ -10,7 +10,6 @@ import com.wiley.alm.responsesubscriber.service.Processor;
 
 @SpringBootApplication
 @EnableBinding(Processor.class)
-@EnableJms
 public class ResponseSubscriberApplication {
 
 	public static void main(String[] args) {

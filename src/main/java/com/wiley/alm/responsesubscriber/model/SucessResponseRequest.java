@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlType;
 
 @XmlRootElement(name = "Fulfillment")
 @XmlType(propOrder = { "header", "body" })
-public class TargetResponseRequest {
+public class SucessResponseRequest {
 
 	private HeaderTM header;
 	private BodyTM body;
