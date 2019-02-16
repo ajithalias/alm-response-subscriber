@@ -13,25 +13,22 @@ import javax.xml.bind.Unmarshaller;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.wiley.alm.responsesubscriber.model.BodyTM;
 import com.wiley.alm.responsesubscriber.model.HeaderTM;
+import com.wiley.alm.responsesubscriber.model.ResponseRequest;
 import com.wiley.alm.responsesubscriber.model.Result;
 import com.wiley.alm.responsesubscriber.model.TargetResponseEvent;
-import com.wiley.alm.responsesubscriber.model.SucessResponseRequest;
-import com.wiley.alm.responsesubscriber.service.MessageProducer;
 
 @Component
-public class SucessResponseConverter implements Converter {
+public class ConverterImpl implements Converter {
 
-	private static final Logger LOGGER = LogManager.getLogger(SucessResponseConverter.class);
+	private static final Logger LOGGER = LogManager.getLogger(ConverterImpl.class);
 
-	private final String RECORD_TYPE="INBOUND_RESPONSE";
-	
+	private final String RECORD_TYPE = "INBOUND_RESPONSE";
 
-	public List<TargetResponseEvent> makeDtoForEventSubscriber(SucessResponseRequest responseRequest) throws Exception {
+	public List<TargetResponseEvent> makeDtoForEventSubscriber(ResponseRequest responseRequest) throws Exception {
 		LOGGER.info("started converting for the request " + responseRequest);
 
 		List<TargetResponseEvent> targetResponseEvent = new ArrayList<TargetResponseEvent>();
@@ -45,6 +42,7 @@ public class SucessResponseConverter implements Converter {
 			event.setTimestamp(String.valueOf(header.getGenerationDate()));
 			event.setSourceReferenceId(result.getPrimaryObjectID());
 			event.setRecordType(RECORD_TYPE);
+			event.setData(result.getError());
 			targetResponseEvent.add(event);
 		}
 
@@ -52,26 +50,25 @@ public class SucessResponseConverter implements Converter {
 		return targetResponseEvent;
 	}
 
-	public SucessResponseRequest convertXMLToObjectForEventStore(final Message jsonMessage) throws JMSException {
+	public ResponseRequest convertXMLToObject(final Message jsonMessage) throws JMSException {
 		String messageData;
 		TextMessage textMessage = (TextMessage) jsonMessage;
 		messageData = textMessage.getText();
 
 		JAXBContext jaxbContext;
-		SucessResponseRequest sucessResponseRequest = null;
+		ResponseRequest sucessResponseRequest = null;
 		try {
-			jaxbContext = JAXBContext.newInstance(SucessResponseRequest.class);
+			jaxbContext = JAXBContext.newInstance(ResponseRequest.class);
 			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 
 			StringReader reader = new StringReader(messageData);
-			sucessResponseRequest = (SucessResponseRequest) unmarshaller.unmarshal(reader);
+			sucessResponseRequest = (ResponseRequest) unmarshaller.unmarshal(reader);
 
 		} catch (JAXBException e) {
-			// TODO Auto-generated catch block
+			LOGGER.info("an error occured while converting xml ", e);
 			e.printStackTrace();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOGGER.info("an error occured while converting xml ", e);
 		}
 
 		return sucessResponseRequest;
@@ -79,7 +76,7 @@ public class SucessResponseConverter implements Converter {
 
 	@Override
 	public List<TargetResponseEvent> convert(Message jsonMessage) throws Exception {
-		SucessResponseRequest req = convertXMLToObjectForEventStore(jsonMessage);
+		ResponseRequest req = convertXMLToObject(jsonMessage);
 		List<TargetResponseEvent> dto = makeDtoForEventSubscriber(req);
 		return dto;
 	}

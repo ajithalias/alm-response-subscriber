@@ -7,12 +7,12 @@ import javax.xml.bind.annotation.XmlType;
 
 @XmlRootElement(name = "Fulfillment")
 @XmlType(propOrder = { "header", "body" })
-public class SucessResponseRequest {
+public class ResponseRequest {
 
 	private HeaderTM header;
 	private BodyTM body;
 
-	@XmlElement(name = "Header")
+	@XmlElement(name = "Header", required = true)
 	public HeaderTM getHeader() {
 		return header;
 	}
@@ -21,7 +21,7 @@ public class SucessResponseRequest {
 		this.header = header;
 	}
 
-	@XmlElement(name = "Body")
+	@XmlElement(name = "Body", required = true)
 	public BodyTM getBody() {
 		return body;
 	}

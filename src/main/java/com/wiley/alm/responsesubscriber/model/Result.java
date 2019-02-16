@@ -10,6 +10,8 @@ public class Result {
 	private String primaryObjectID;
 	private String operationResult;
 	private String sequenceNumber;
+	
+	private Error error;
 
 	@XmlElement(name = "OperationType")
 	public String getOperationType() {
@@ -47,4 +49,15 @@ public class Result {
 		this.sequenceNumber = sequenceNumber;
 	}
 
+	@XmlElement(name = "Error")
+	public Error getError() {
+		return error;
+	}
+
+	public void setError(Error error) {
+		this.error = error;
+	}
+
+	
+	
 }

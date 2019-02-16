@@ -50,7 +50,7 @@ public class AlmJmsReceiver {
 				List<TargetResponseEvent> event = converter.convert(message);
 				producer.sendMessage(event);
 
-				System.out.println("Successfully completed all the operations");
+				LOGGER.info("Successfully completed all the operations");
 
 			} catch (JMSException exception) {
 				LOGGER.error("Exception occured while processing the response.... ", exception);
@@ -82,11 +82,9 @@ public class AlmJmsReceiver {
 	}
 
 	private boolean isSuccess(String xmlString) {
-		if (xmlString.contains("<OperationResult>SUCCESS</OperationResult>")) {
-			return true;
-		}
 
-		return false;
+		return true;
+		//can be expand if dto model changes
 
 	}
 

@@ -1,4 +1,4 @@
-package com.wiley.alm.responsesubscriber.model.response.faliure;
+package com.wiley.alm.responsesubscriber.model;
 
 import javax.xml.bind.annotation.XmlElement;
 
